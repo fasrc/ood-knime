@@ -33,8 +33,10 @@ xfsettingsd --sm-client-disable --daemon
     xfce4-panel --sm-client-disable
 ) &
 
-COMMAND='xfce4-terminal -e "/bin/bash -l -c \"/n/holylabs/LABS/rc_admin/Lab/mjoshi/knime-test/knime_5.4.3/knime\" "'
-#COMMAND='xfce4-terminal -e "/bin/bash -l -c \"${HOME}/knime_5.2.5/knime\" "'  
+#COMMAND='xfce4-terminal -e "/bin/bash -l -c \"/n/holylabs/LABS/rc_admin/Lab/mjoshi/knime-test/knime_5.4.3/knime\" "'
+#COMMAND='xfce4-terminal -e "/bin/bash -l -c \"${HOME}/knime_5.2.5/knime\" "'
+COMMAND='xfce4-terminal -e "/bin/bash -l -c \"/n/sw/knime/knime-5.4.3/knime\" "'
+
 
 # Start up desktop
 echo "Launching desktop '<%= context.desktop %>'..."
