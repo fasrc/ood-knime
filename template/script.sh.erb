@@ -13,11 +13,6 @@ set -x
 export SEND_256_COLORS_TO_REMOTE=1
 export XDG_RUNTIME_DIR="$(mktemp -d)"
 
-# not necessary to eliminate Applications menu
-#export XDG_CONFIG_HOME="<%= session.staged_root.join("config") %>"
-#export XDG_DATA_HOME="<%= session.staged_root.join("share") %>"
-#export XDG_CACHE_HOME="\$(mktemp -d)"
-
 module restore
 set -x
 xfwm4 --compositor=off --sm-client-disable &
@@ -33,10 +28,9 @@ xfsettingsd --sm-client-disable --daemon
     xfce4-panel --sm-client-disable
 ) &
 
-#COMMAND='xfce4-terminal -e "/bin/bash -l -c \"/n/holylabs/LABS/rc_admin/Lab/mjoshi/knime-test/knime_5.4.3/knime\" "'
-#COMMAND='xfce4-terminal -e "/bin/bash -l -c \"${HOME}/knime_5.2.5/knime\" "'
-COMMAND='xfce4-terminal -e "/bin/bash -l -c \"/n/sw/knime/knime-5.4.3/knime\" "'
-
+# Load KNIME module for the executable to become available in the path 
+module load knime
+COMMAND='xfce4-terminal -e "/bin/bash -l -c \"knime\" "'
 
 # Start up desktop
 echo "Launching desktop '<%= context.desktop %>'..."
