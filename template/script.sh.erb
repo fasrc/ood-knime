@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# Change working directory to user's home directory
+cd "${HOME}"
+
+# Clean the environment
+module purge
+set -x
+
+#
+# Launch Xfce Window Manager and Panel
+#
+export SEND_256_COLORS_TO_REMOTE=1
+export XDG_RUNTIME_DIR="$(mktemp -d)"
+
+module restore
+set -x
+xfwm4 --compositor=off --sm-client-disable &
+xsetroot -solid "#D3D3D3"
+xfsettingsd --sm-client-disable --daemon
+(
+    # wait for the settings daemon to become available, or else the panel will not load its icons
+    while [ -z "$(dbus-send --session --dest=org.freedesktop.DBus --type=method_call --print-reply /org/freedesktop/DBus org.freedesktop.DBus.ListNames | grep -F \"org.xfce.SettingsDaemon\")" ]; do
+      sleep 1
+      set +x
+    done
+    set -x
+    xfce4-panel --sm-client-disable
+) &
+
+# Load KNIME module for the executable to become available in the path 
+module load knime
+COMMAND='xfce4-terminal -e "/bin/bash -l -c \"knime\" "'
+
+# Start up desktop
+echo "Launching desktop '<%= context.desktop %>'..."
+
+# Load the required environment
+# set oom_score_adj to 1000 in job script (parent) so it app is terminated in
+# the event the rsession (child) OOMs to avoid the appearance of the app
+# continuing to function in OOD/Slurm with a 502 Proxy error on reconnect
+echo 1000 > /proc/self/oom_score_adj
+(
+  echo 0 > /proc/self/oom_score_adj
+  eval exec $COMMAND
+)
+
+# this script cannot exit or Slurm will think the job is done and kill child processes
+wait
+
+echo "Desktop '<%= context.desktop %>' ended..."
