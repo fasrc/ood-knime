@@ -1,63 +1,77 @@
 ---
 title: "KNIME"
-cluster: "odyssey3"
+cluster: "fasse"
 attributes:
-  desktop: "myxfce"
-  bc_vnc_idle: 0
-  node_type: null
+  desktop: "xfce"
   bc_num_slots: null
   bc_vnc_resolution:
     value: "1024x768"
     required: true
   bc_account:
-    help: "Only relevant if you have multiple slurm accounts. It can be left blank otherwise"
+    help: |
+      *sbatch -A, --account=\<account\>*
+
+      Leave blank if you do not have multiple Slurm accounts  
   custom_time:
-    label: "Allocated Time (expressed in MM , or HH:MM:SS , or DD-HH:MM)."
+    label: "Allocated Time (expressed in MM , or HH:MM:SS , or DD-HH:MM). Maximum for this partition is 7 days"
     value: "04:00:00"
     widget: text_field
     help: |
       *sbatch -t, --time=\<time\>*
-  bc_num_hours: null
   bc_queue: 
-    value: "test"
+    value: "fasse"
     help: |
       *sbatch -p, --partition=\<partition_names\>*
 
-      [Slurm partition](https://www.rc.fas.harvard.edu/resources/running-jobs/#Slurm_partitions) name (e.g., **shared** ), or comma-separated list of partition names (e.g., **shared,test** )
+      [Slurm partition](https://docs.rc.fas.harvard.edu/kb/fasse/#SLURM_and_Partitions) name (e.g., **fasse** ), or comma-separated list of partition names (e.g., **fasse,test** )
   custom_email_address:
-    label: email for status notification
+    label: Email address for status notification
     widget: text_field
   custom_memory_per_node:
     label: Memory Allocation in GB
     value: 8
     min:   4
     step:  1
-    max:   2000
+    max:   900
     widget: number_field
+    help: |
+      *sbatch --mem=\<size\>G*
   custom_num_cores:
     label: Number of cores
     value: 2
-    min:   1
+    min:   2
     step:  1
     widget: number_field
-    help: "Number of Cpus to allocate"
+    help: "Number of CPUs to allocate"
+    help: |
+      *sbatch -c, --cpus-per-task=\<ncpus\>*
   custom_num_gpus:
     label: Number of GPUs
     value: 0
     min:   0
     step:  1
-    max:   4
     widget: number_field
     help: "Number of GPUs to allocate. Available only on GPU enabled partitions. Set to 0 for the remoteviz partition."
   custom_reservation:
     label: Reservation
     widget: text_field
+    help: |
+      *sbatch --reservation=\<name\>*
+
+      Leave blank if you do not have a Slurm reservation
   custom_desktop:
     label: "Custom Desktop Folder"
     widget: check_box
     value: 1
     help: |
           **_Checking this box will create a desktop folder unique to this job_**
+  knime_version:
+    widget: select
+    label: "Knime version"
+    help: |
+      Loads the [module](https://docs.rc.fas.harvard.edu/kb/modules-intro/) for the requested version
+    options:
+      - [ "Knime 5.4.3",  "knime/5.4.3-fasrc01" ]	  
   extra_slurm:
     label: Additional Slurm options
     widget: text_field
@@ -72,17 +86,15 @@ attributes:
 
 
 form:
-  - bc_vnc_idle
   - desktop
   - bc_vnc_resolution
   - bc_num_slots
-  - node_type
   - bc_queue
   - custom_memory_per_node
   - custom_num_cores
   - custom_num_gpus
-  - bc_num_hours
   - custom_time
+  - knime_version
   - custom_desktop
   - custom_email_address
   - bc_email_on_started
