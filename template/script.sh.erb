@@ -29,7 +29,7 @@ xfsettingsd --sm-client-disable --daemon
 ) &
 
 # Load KNIME module for the executable to become available in the path 
-module load knime
+module load <%= context.knime_version %>
 COMMAND='xfce4-terminal -e "/bin/bash -l -c \"knime\" "'
 
 # Start up desktop
