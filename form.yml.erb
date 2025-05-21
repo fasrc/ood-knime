@@ -1,6 +1,6 @@
 ---
 title: "KNIME"
-cluster: "fasse"
+cluster: %{facts.cluster}
 attributes:
   desktop: "xfce"
   bc_num_slots: null
@@ -11,19 +11,19 @@ attributes:
     help: |
       *sbatch -A, --account=\<account\>*
 
-      Leave blank if you do not have multiple Slurm accounts  
+      Leave blank if you do not have multiple Slurm accounts
   custom_time:
-    label: "Allocated Time (expressed in MM , or HH:MM:SS , or DD-HH:MM). Maximum for this partition is 7 days"
+    label: "Allocated Time (expressed in MM , or HH:MM:SS , or DD-HH:MM). Maximum for this partition is 12 hours"
     value: "04:00:00"
     widget: text_field
     help: |
       *sbatch -t, --time=\<time\>*
   bc_queue: 
-    value: "fasse"
+    value: "test"
     help: |
       *sbatch -p, --partition=\<partition_names\>*
 
-      [Slurm partition](https://docs.rc.fas.harvard.edu/kb/fasse/#SLURM_and_Partitions) name (e.g., **fasse** ), or comma-separated list of partition names (e.g., **fasse,test** )
+      [Slurm partition](https://docs.rc.fas.harvard.edu/kb/fasse/#SLURM_and_Partitions) name (e.g., **test** ), or comma-separated list of partition names (e.g., **test,serial_requeue** )
   custom_email_address:
     label: Email address for status notification
     widget: text_field
@@ -64,7 +64,8 @@ attributes:
     help: |
       Loads the [module](https://docs.rc.fas.harvard.edu/kb/modules-intro/) for the requested version
     options:
-      - [ "Knime 5.4.3",  "knime/5.4.3-fasrc01" ]	  
+      - [ "Knime 5.4.4",  "knime/5.4.4-fasrc01" ]
+      - [ "Knime 5.4.3",  "knime/5.4.3-fasrc01" ]
   extra_slurm:
     label: Additional Slurm options
     widget: text_field

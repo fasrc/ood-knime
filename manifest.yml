@@ -7,7 +7,8 @@ role: batch_connect
 description: |
   This app will launch an interactive desktop session for [Knime] on a compute node in a partition of your choice on the [FASSE Cluster].
 
-  You can select the amount of RAM (in GB), CPUs, GPUs, and Timelimit (in hrs). You can also receive an email notification for when the job starts, if you provide your email address.
+  You can select the amount of RAM (in GB), CPUs, GPUs, and Timelimit (in hrs).
+  You can also receive an email notification for when the job starts, if you provide your email address.
 
-  [Knime]: https://www.knime.com/ 
+  [Knime]: https://www.knime.com/
   [FASSE Cluster]: https://docs.rc.fas.harvard.edu/kb/fasse
